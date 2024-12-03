@@ -1,3 +1,6 @@
+import os
+import subprocess
+from pathlib import Path
 from langchain.text_splitter import Language
 from langchain_community.document_loaders.generic import GenericLoader
 from langchain_community.document_loaders.parsers import LanguageParser
@@ -5,11 +8,17 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import OllamaEmbeddings
 
-repo_path = '/Users/medhirbhargava/code/msal/microsoft-authentication-library-for-js'
+# Create temp directory and clone repo
+repo_url = "https://github.com/AzureAD/microsoft-authentication-library-for-js.git"
+repo_path = Path("./msal-js-repo").absolute()
+
+if not repo_path.exists():
+    print(f"Cloning MSAL.js repository to {repo_path}...")
+    subprocess.run(["git", "clone", repo_url, str(repo_path)], check=True)
 
 # load documents
 lib_js_loader = GenericLoader.from_filesystem(
-    repo_path + '/lib',
+    str(repo_path / "lib"),
     glob='**/*',
     suffixes=[".js", ".ts", ".jsx", ".tsx"], 
     exclude=[".min.js"],
@@ -17,7 +26,7 @@ lib_js_loader = GenericLoader.from_filesystem(
 )
 
 samples_js_loader = GenericLoader.from_filesystem(
-    repo_path + '/samples',
+    str(repo_path / "samples"),
     glob='**/*',
     suffixes=[".js", ".ts", ".jsx", ".tsx"], 
     exclude=[".min.js"],
