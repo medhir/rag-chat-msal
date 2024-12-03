@@ -1,0 +1,6 @@
+streamlit
+langchain
+langchain-community
+chromadb
+ollama
+esprima
