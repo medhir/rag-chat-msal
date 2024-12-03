@@ -49,11 +49,13 @@ This will take a while depending on your internet speed as the model is about 26
 
 ### Generate Vector Embeddings
 
-Training data must be ingested as embeddings into a vector database for later reference as part of queries issued to the chatbot. To ingest the MSAL Javascript repository, run the following command: 
+In order to reference code and samples from the MSAL.js library, the documents must be ingested as embeddings into a vector database. To ingest the MSAL Javascript repository, run the following command: 
 
 ```sh
 python ingest.py
 ```
+
+Note that the duration of this ingestion process is dependent on your system's GPU configuration. On an M1 Max chip this takes several hours to complete. 
 
 ## Running Locally
 
